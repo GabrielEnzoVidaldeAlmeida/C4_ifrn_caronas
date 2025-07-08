@@ -1,0 +1,37 @@
+@startuml MobileApp_Components
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Usuário IFRN", "Aluno ou servidor que usa o app mobile")
+
+System_Boundary(mobileApp, "Mobile Application (React Native)") {
+
+  Component(loginScreen, "LoginScreen", "Tela de autenticação via SUAP", "Tela de login do app mobile")
+  Component(dashboardScreen, "DashboardScreen", "Tela principal do app", "Mostra caronas, notificações, histórico e resumo do usuário")
+  
+  Component(caronaFormScreen, "CaronaFormScreen", "Formulário para cadastro/edição de caronas", "Usado para criar ou editar caronas")
+  Component(buscaCaronaScreen, "BuscaCaronaScreen", "Busca de caronas disponíveis", "Tela para pesquisar caronas por filtros")
+  Component(solicitacaoScreen, "SolicitacaoScreen", "Gerenciamento de solicitações", "Gerencia solicitações feitas e recebidas")
+  
+  Component(avaliacaoScreen, "AvaliacaoScreen", "Tela de avaliações", "Permite avaliar motoristas e passageiros")
+  Component(notificacaoPanel, "NotificacaoPanel", "Painel de notificações", "Mostra notificações e alertas")
+  Component(perfilScreen, "PerfilScreen", "Gerenciamento do perfil", "Exibição e edição dos dados do usuário")
+
+}
+
+Rel(user, loginScreen, "Usa para autenticar")
+Rel(user, dashboardScreen, "Visualiza caronas, notificações, histórico e resumo")
+Rel(user, caronaFormScreen, "Usa para cadastrar/editar caronas")
+Rel(user, buscaCaronaScreen, "Busca caronas disponíveis")
+Rel(user, solicitacaoScreen, "Gerencia solicitações de caronas")
+Rel(user, avaliacaoScreen, "Avalia motoristas e passageiros")
+Rel(user, notificacaoPanel, "Recebe notificações e alertas")
+Rel(user, perfilScreen, "Visualiza e edita seu perfil")
+
+Rel(loginScreen, dashboardScreen, "Redireciona após login")
+Rel(caronaFormScreen, dashboardScreen, "Interage para atualizar caronas")
+Rel(buscaCaronaScreen, dashboardScreen, "Complementa visualização de caronas")
+Rel(solicitacaoScreen, dashboardScreen, "Atualiza status de solicitações")
+Rel(avaliacaoScreen, dashboardScreen, "Mostra avaliações e feedbacks")
+Rel(notificacaoPanel, dashboardScreen, "Integra notificações no painel")
+
+@enduml

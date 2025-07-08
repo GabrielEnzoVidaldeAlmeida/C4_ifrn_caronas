@@ -1,0 +1,38 @@
+@startuml CONTAINER_DIAGRAM
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Diagrama de Containers – IFRN Caronas (Next.js + DRF + App Mobile)
+
+' Atores
+Person(usuario, "Usuário IFRN", "Aluno ou servidor que oferece ou solicita caronas")
+
+System_Boundary(sistema, "IFRN Caronas") {
+
+  Container(webapp, "Web Application", "React + Next.js", "React + Next.js com renderização híbrida (SSR + CSR), interface web para busca, solicitação e gerenciamento de caronas")
+    
+  Container(mobile, "Mobile Application", "React Native", "Aplicativo mobile usado pelos usuários para interagir com o sistema")
+  
+  Container(api, "API Backend", "Django REST Framework", "Gerencia autenticação, regras de negócio, notificações e acesso ao banco de dados")
+    
+  Container(notify, "Módulo de Notificações", "Interno (email backend)", "Envia e-mails automáticos para motoristas e passageiros")
+
+  ContainerDb(db, "Banco de Dados", "PostgreSQL ou SQLite", "Armazena usuários, caronas, solicitações, avaliações, logs, etc.")
+}
+
+' Sistemas externos
+System_Ext(suap, "SUAP", "Autenticação institucional do IFRN")
+System_Ext(email, "Serviço de E-mail", "SMTP para envio de mensagens institucionais")
+System_Ext(maps, "Google Maps", "API de mapas usada para exibir localização de rotas")
+
+' Relacionamentos
+Rel(usuario, webapp, "Usa via navegador")
+Rel(usuario, mobile, "Usa via smartphone")
+Rel(webapp, api, "Faz requisições HTTP para")
+Rel(mobile, api, "Faz requisições HTTP para")
+Rel(api, db, "Lê e grava dados")
+Rel(api, suap, "Autentica via")
+Rel(api, notify, "Dispara notificações para")
+Rel(notify, email, "Envia e-mails via")
+Rel(api, maps, "Consulta rotas e localização (opcional)")
+
+@enduml

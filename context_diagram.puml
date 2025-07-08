@@ -1,0 +1,24 @@
+@startuml CONTEXT_DIAGRAM
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Diagrama de Contexto – IFRN Caronas
+
+' Atores
+Person(usuario, "Usuário IFRN", "Aluno ou servidor que oferece ou solicita caronas")
+
+' Sistemas externos
+System_Ext(suap, "SUAP", "Sistema de autenticação institucional do IFRN")
+System_Ext(email, "Serviço de E-mail", "Envio de notificações por e-mail institucional")
+System_Ext(maps, "Google Maps", "Serviço de geolocalização para rotas")
+
+' Sistema principal
+System(ifrnCaronas, "IFRN Caronas", "Plataforma de compartilhamento de caronas para a comunidade acadêmica do IFRN")
+
+' Relacionamentos
+Rel(usuario, ifrnCaronas, "Oferece ou solicita caronas")
+Rel(usuario, suap, "Autentica via")
+Rel(suap, ifrnCaronas, "Fornece autenticação e dados do usuário")
+Rel(ifrnCaronas, email, "Envia notificações para os usuários")
+Rel(ifrnCaronas, maps, "Consulta para exibir rotas e localizações")
+
+@enduml

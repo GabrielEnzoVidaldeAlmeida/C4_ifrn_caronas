@@ -1,0 +1,37 @@
+@startuml WebApp_Components
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Usuário IFRN", "Aluno ou servidor que usa a aplicação web")
+
+System_Boundary(webApp, "Web Application (React + Next.js)") {
+
+  Component(loginPage, "LoginComponent", "Tela de autenticação via SUAP", "Página para login e autenticação do usuário")
+  Component(dashboardPage, "DashboardComponent", "Tela principal do sistema", "Exibe caronas, notificações, histórico e resumo do usuário")
+  
+  Component(caronaForm, "CaronaFormComponent", "Formulário para cadastro/edição de caronas", "Usado nas páginas de cadastro e edição de caronas")
+  Component(buscaCaronaPage, "BuscaCaronaComponent", "Interface para busca de caronas", "Permite pesquisa por destino, horário, dia da semana, etc.")
+  Component(solicitacaoPage, "SolicitacaoComponent", "Gerenciamento de solicitações", "Visualização e gerenciamento das solicitações feitas e recebidas")
+  
+  Component(avaliacaoPage, "AvaliacaoComponent", "Tela de avaliações", "Permite avaliação de motoristas e passageiros")
+  Component(notificacaoPanel, "NotificacaoComponent", "Painel de notificações", "Exibe notificações e alertas para o usuário")
+  Component(perfilPage, "PerfilComponent", "Gerenciamento do perfil do usuário", "Exibição e edição dos dados do usuário")
+
+}
+
+Rel(user, loginPage, "Usa para autenticar")
+Rel(user, dashboardPage, "Visualiza caronas, notificações, histórico e resumo")
+Rel(user, caronaForm, "Usa para cadastrar/editar caronas")
+Rel(user, buscaCaronaPage, "Busca caronas disponíveis")
+Rel(user, solicitacaoPage, "Gerencia solicitações de caronas")
+Rel(user, avaliacaoPage, "Avalia motoristas e passageiros")
+Rel(user, notificacaoPanel, "Recebe notificações e alertas")
+Rel(user, perfilPage, "Visualiza e edita seu perfil")
+
+Rel(loginPage, dashboardPage, "Redireciona após login")
+Rel(caronaForm, dashboardPage, "Interage para atualizar caronas")
+Rel(buscaCaronaPage, dashboardPage, "Complementa a visualização de caronas")
+Rel(solicitacaoPage, dashboardPage, "Atualiza status de solicitações")
+Rel(avaliacaoPage, dashboardPage, "Mostra avaliações e feedbacks")
+Rel(notificacaoPanel, dashboardPage, "Integra notificações no painel")
+
+@enduml

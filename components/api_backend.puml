@@ -1,0 +1,45 @@
+@startuml BackendAPI_Components
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+' === Atores e Sistemas Externos ===
+Person(user, "Usuário IFRN", "Aluno ou servidor via Web/Mobile")
+System_Ext(suap, "SUAP", "Autenticação institucional")
+System_Ext(smtpServer, "Servidor SMTP", "Servidor de envio de e-mails institucionais")
+System_Ext(googleMaps, "Google Maps", "Serviço de geolocalização")
+ContainerDb(db, "Banco de Dados", "PostgreSQL/SQLite", "Armazena usuários, caronas, solicitações, etc.")
+
+' === Container: API Backend ===
+System_Boundary(api, "API Backend (Django REST Framework)") {
+
+  Component(authService,       "AuthService",       "Autenticação",           "Autentica via SUAP e gerencia perfil")
+  Component(caronaService,     "CaronaService",     "Gestão de caronas",      "Cadastro, edição e busca")
+  Component(solicitacaoService,"SolicitacaoService","Solicitações",           "Gerencia solicitações de carona")
+  Component(avaliacaoService,  "AvaliacaoService",  "Avaliações",             "Feedback entre usuários")
+  Component(relatorioService,  "RelatorioService",  "Relatórios",             "Estatísticas e rankings")
+  Component(notificacaoService,"NotificacaoService","Notificações",          "Dispara notificações por e-mail")
+  Component(auditoriaService,  "AuditoriaService",  "Auditoria",              "Logs de ações")
+  Component(mapsService,       "MapsService",       "Integração Google Maps", "Consulta rotas")
+}
+
+' === Relacionamentos usuário → componentes ===
+Rel(user, authService,        "Autentica e gerencia perfil")
+Rel(user, caronaService,      "Cria / busca caronas")
+Rel(user, solicitacaoService, "Solicita / gerencia caronas")
+Rel(user, avaliacaoService,   "Envia avaliações")
+Rel(user, relatorioService,   "Consulta estatísticas")
+Rel(user, notificacaoService, "Recebe notificações")
+
+' === Integrações externas ===
+Rel(authService,        suap,        "Autentica via")
+Rel(notificacaoService, smtpServer,  "Envia e-mails via SMTP")
+Rel(mapsService,        googleMaps,  "Consulta rotas")
+
+' === Banco de dados ===
+Rel(authService,        db, "Grava perfil")
+Rel(caronaService,      db, "Lê/Grava caronas")
+Rel(solicitacaoService, db, "Lê/Grava solicitações")
+Rel(avaliacaoService,   db, "Lê/Grava feedbacks")
+Rel(relatorioService,   db, "Consulta dados")
+Rel(auditoriaService,   db, "Registra logs")
+
+@enduml
