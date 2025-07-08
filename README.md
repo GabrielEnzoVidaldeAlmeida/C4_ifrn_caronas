@@ -6,7 +6,7 @@ Os diagramas seguem o **modelo C4 do nível 1 ao 3** (Contexto, Containers e Com
 
 Todos os diagramas foram escritos em **PlantUML** com a biblioteca oficial **C4-PlantUML**.
 
-## 📐 Estrutura dos Diagramas
+## Estrutura dos Diagramas
 
 | Nível | Nome do Diagrama        | Descrição |
 |-------|--------------------------|-----------|
@@ -16,7 +16,7 @@ Todos os diagramas foram escritos em **PlantUML** com a biblioteca oficial **C4-
 | 3️⃣    | `mobile_application.puml`| Componentes da aplicação mobile feita em React Native. |
 | 3️⃣    | `api_backend.puml`| Componentes da API Backend (Django REST Framework), incluindo autenticação, caronas, avaliações, notificações e logs. |
 
-## 🚀 Como visualizar os diagramas PlantUML
+## Como visualizar os diagramas PlantUML
 
 1. Instale a extensão **PlantUML** no VS Code.
 2. Verifique se o **Java** está instalado utilizando `java -version` no cmd.
